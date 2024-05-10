@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const module_1 = __importDefault(require());
-const module_2 = __importDefault(require());
-const module_3 = __importDefault(require());
+const makeOrdinal_1 = __importDefault(require("./makeOrdinal"));
+const isFinite_1 = __importDefault(require("./isFinite"));
+const isSafeNumber_1 = __importDefault(require("./isSafeNumber"));
 const TEN = 10;
 const ONE_HUNDRED = 100;
 const ONE_THOUSAND = 1000;
@@ -32,14 +32,14 @@ const TENTHS_LESS_THAN_HUNDRED = [
 function toWords(number, asOrdinal) {
     let words;
     let num = parseInt(number, 10);
-    if (!(0, module_2.default)(num)) {
+    if (!(0, isFinite_1.default)(num)) {
         throw new TypeError('Not a finite number: ' + number + ' (' + typeof number + ')');
     }
-    if (!(0, module_3.default)(num)) {
+    if (!(0, isSafeNumber_1.default)(num)) {
         throw new RangeError('Input is not a safe number, it’s either too large or too small.');
     }
     words = generateWords(num);
-    return asOrdinal ? (0, module_1.default)(words) : words;
+    return asOrdinal ? (0, makeOrdinal_1.default)(words) : words;
 }
 function generateWords(number, words) {
     let remainder = 0;
@@ -98,4 +98,4 @@ function generateWords(number, words) {
     words.push(word);
     return generateWords(remainder, words);
 }
-module.exports = toWords;
+exports.default = toWords;
